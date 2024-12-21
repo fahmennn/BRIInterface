@@ -1,0 +1,85 @@
+November 7, 2024 at 11:42:10 AM WIB[busy-task-1] com.ibm.msg.client.jms.internal.JmsProviderExceptionListener
+The exception is ignored as no exception listener is registered: '
+                       Message : com.ibm.msg.client.jms.DetailedJMSException: JMSWMQ1107: A problem with this connection has occurred.
+An error has occurred with the IBM MQ JMS connection.
+Use the linked exception to determine the cause of this error.
+                         Class : class com.ibm.msg.client.jms.DetailedJMSException
+                         Stack : com.ibm.msg.client.wmq.common.internal.Reason.reasonToException(Reason.java:595)
+                               : com.ibm.msg.client.wmq.common.internal.Reason.createException(Reason.java:215)
+                               : com.ibm.msg.client.wmq.internal.WMQMessageConsumer.checkJmqiCallSuccess(WMQMessageConsumer.java:217)
+                               : com.ibm.msg.client.wmq.internal.WMQMessageConsumer.checkJmqiCallSuccess(WMQMessageConsumer.java:156)
+                               : com.ibm.msg.client.wmq.internal.WMQConsumerShadow.getMsg(WMQConsumerShadow.java:1861)
+                               : com.ibm.msg.client.wmq.internal.WMQSyncConsumerShadow.receiveInternal(WMQSyncConsumerShadow.java:230)
+                               : com.ibm.msg.client.wmq.internal.WMQConsumerShadow.receive(WMQConsumerShadow.java:1466)
+                               : com.ibm.msg.client.wmq.internal.WMQMessageConsumer.receive(WMQMessageConsumer.java:674)
+                               : com.ibm.msg.client.jms.internal.JmsMessageConsumerImpl.receiveInboundMessage(JmsMessageConsumerImpl.java:1073)
+                               : com.ibm.msg.client.jms.internal.JmsMessageConsumerImpl.receive(JmsMessageConsumerImpl.java:691)
+                               : com.ibm.mq.jms.MQMessageConsumer.receive(MQMessageConsumer.java:209)
+                               : org.springframework.jms.connection.CachedMessageConsumer.receive(CachedMessageConsumer.java:86)
+                               : org.springframework.jms.support.destination.JmsDestinationAccessor.receiveFromConsumer(JmsDestinationAccessor.java:132)
+                               : org.springframework.jms.core.JmsTemplate.doReceive(JmsTemplate.java:788)
+                               : org.springframework.jms.core.JmsTemplate.doReceive(JmsTemplate.java:765)
+                               : org.springframework.jms.core.JmsTemplate.lambda$receiveSelected$9(JmsTemplate.java:749)
+                               : org.springframework.jms.core.JmsTemplate.execute(JmsTemplate.java:504)
+                               : org.springframework.jms.core.JmsTemplate.receiveSelected(JmsTemplate.java:747)
+                               : com.nttdata.id.briinterface.service.MQService.receiveFromQueue(MQService.java:84)
+                               : com.nttdata.id.briinterface.service.MQService$$FastClassBySpringCGLIB$$82eb0ffa.invoke(<generated>:-1)
+                               : org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+                               : org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:688)
+                               : com.nttdata.id.briinterface.service.MQService$$EnhancerBySpringCGLIB$$7af5b1df.receiveFromQueue(<generated>:-1)
+                               : com.nttdata.id.briinterface.service.AccountService.busyProcessInquiry(AccountService.java:64)
+                               : com.nttdata.id.briinterface.service.AccountService$$FastClassBySpringCGLIB$$bf9bf5ff.invoke(<generated>:-1)
+                               : org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+                               : org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:779)
+                               : org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+                               : org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:750)
+                               : org.springframework.aop.interceptor.AsyncExecutionInterceptor.lambda$invoke$0(AsyncExecutionInterceptor.java:115)
+                               : org.springframework.aop.interceptor.AsyncExecutionAspectSupport.lambda$doSubmit$3(AsyncExecutionAspectSupport.java:276)
+                               : java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+                               : java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+                               : java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+                               : java.lang.Thread.run(Thread.java:842)
+     Caused by [1] --> Message : com.ibm.mq.MQException: JMSCMQ0001: IBM MQ call failed with compcode '2' ('MQCC_FAILED') reason '2195' ('MQRC_UNEXPECTED_ERROR').
+                         Class : class com.ibm.mq.MQException
+                         Stack : com.ibm.msg.client.wmq.common.internal.Reason.createException(Reason.java:203)
+                               : com.ibm.msg.client.wmq.internal.WMQMessageConsumer.checkJmqiCallSuccess(WMQMessageConsumer.java:217)
+                               : com.ibm.msg.client.wmq.internal.WMQMessageConsumer.checkJmqiCallSuccess(WMQMessageConsumer.java:156)
+                               : com.ibm.msg.client.wmq.internal.WMQConsumerShadow.getMsg(WMQConsumerShadow.java:1861)
+                               : com.ibm.msg.client.wmq.internal.WMQSyncConsumerShadow.receiveInternal(WMQSyncConsumerShadow.java:230)
+                               : com.ibm.msg.client.wmq.internal.WMQConsumerShadow.receive(WMQConsumerShadow.java:1466)
+                               : com.ibm.msg.client.wmq.internal.WMQMessageConsumer.receive(WMQMessageConsumer.java:674)
+                               : com.ibm.msg.client.jms.internal.JmsMessageConsumerImpl.receiveInboundMessage(JmsMessageConsumerImpl.java:1073)
+                               : com.ibm.msg.client.jms.internal.JmsMessageConsumerImpl.receive(JmsMessageConsumerImpl.java:691)
+                               : com.ibm.mq.jms.MQMessageConsumer.receive(MQMessageConsumer.java:209)
+                               : org.springframework.jms.connection.CachedMessageConsumer.receive(CachedMessageConsumer.java:86)
+                               : org.springframework.jms.support.destination.JmsDestinationAccessor.receiveFromConsumer(JmsDestinationAccessor.java:132)
+                               : org.springframework.jms.core.JmsTemplate.doReceive(JmsTemplate.java:788)
+                               : org.springframework.jms.core.JmsTemplate.doReceive(JmsTemplate.java:765)
+                               : org.springframework.jms.core.JmsTemplate.lambda$receiveSelected$9(JmsTemplate.java:749)
+                               : org.springframework.jms.core.JmsTemplate.execute(JmsTemplate.java:504)
+                               : org.springframework.jms.core.JmsTemplate.receiveSelected(JmsTemplate.java:747)
+                               : com.nttdata.id.briinterface.service.MQService.receiveFromQueue(MQService.java:84)
+                               : com.nttdata.id.briinterface.service.MQService$$FastClassBySpringCGLIB$$82eb0ffa.invoke(<generated>:-1)
+                               : org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+                               : org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:688)
+                               : com.nttdata.id.briinterface.service.MQService$$EnhancerBySpringCGLIB$$7af5b1df.receiveFromQueue(<generated>:-1)
+                               : com.nttdata.id.briinterface.service.AccountService.busyProcessInquiry(AccountService.java:64)
+                               : com.nttdata.id.briinterface.service.AccountService$$FastClassBySpringCGLIB$$bf9bf5ff.invoke(<generated>:-1)
+                               : org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+                               : org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:779)
+                               : org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+                               : org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:750)
+                               : org.springframework.aop.interceptor.AsyncExecutionInterceptor.lambda$invoke$0(AsyncExecutionInterceptor.java:115)
+                               : org.springframework.aop.interceptor.AsyncExecutionAspectSupport.lambda$doSubmit$3(AsyncExecutionAspectSupport.java:276)
+                               : java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+                               : java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+                               : java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+                               : java.lang.Thread.run(Thread.java:842)
+'.
+
+EXPLANATION:
+An attempt was made to deliver an exception to the connections exception listener but a listener has not been registered.
+
+ACTION:
+An exception listener must be registered with the connection to receive its exceptions.
+--------------------------------------------------------------------
