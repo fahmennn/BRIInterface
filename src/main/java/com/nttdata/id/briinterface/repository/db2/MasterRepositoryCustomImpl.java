@@ -43,12 +43,12 @@ public class MasterRepositoryCustomImpl implements MasterRepositoryCustom {
 
     // Condition for start date is empty and end date is not empty
     if ((startCtrcDate == null || startCtrcDate.isEmpty()) && (endCtrcDate != null && !endCtrcDate.isEmpty())) {
-      rangeDate = "AND m.CTRCT_DATE <= '" + endCtrcDate + "'";
+      rangeDate = "AND m.CTRCT_DATE <= ':endCtrcDate'";
     }
 
     // Condition for start date is not empty and end date is empty
     if ((startCtrcDate != null && !startCtrcDate.isEmpty()) && (endCtrcDate == null || endCtrcDate.isEmpty())) {
-      rangeDate = "AND m.CTRCT_DATE BETWEEN '" + startCtrcDate + "' AND '" + currentDate.format(formatter) + "'";
+      rangeDate = "AND m.CTRCT_DATE BETWEEN ':startCtrcDate' AND ':nowTime'";
     }
 
     // Condition for start date and end date is empty
@@ -58,7 +58,7 @@ public class MasterRepositoryCustomImpl implements MasterRepositoryCustom {
 
     // Condition for start date and end date is not empty
     if ((startCtrcDate != null && !startCtrcDate.isEmpty()) && endCtrcDate != null && !endCtrcDate.isEmpty()) {
-      rangeDate = "AND m.CTRCT_DATE BETWEEN '" + startCtrcDate + "' AND '" + endCtrcDate + "'";
+      rangeDate = "AND m.CTRCT_DATE BETWEEN ':startCtrcDate' AND ':endCtrcDate'";
     }
 
     StringBuilder sql = new StringBuilder(
@@ -84,7 +84,7 @@ public class MasterRepositoryCustomImpl implements MasterRepositoryCustom {
       " m.ORIGTEAM AS ORIGTEAM, m.ORIGISUSER AS ORIGISUSER, m.ORIGBRANCH AS ORIGBRANCH, m.ORIGUSER AS ORIGUSER, \r\n" +
       " m.ORIGREF AS ORIGREF, m.EBANKMSREF AS EBANKMSREF, m.NPRCUSTSBB AS NPRCUSTSBB, m.NPRCUSTMNM AS NPRCUSTMNM, \r\n" +
       " m.NPRNAME_L1 AS NPRNAME_L1, m.PCP_SW_BIC AS PCP_SW_BIC, m.NPC_SW_BIC AS NPC_SW_BIC, \r\n" +
-      "ROW_NUMBER() OVER (ORDER BY m." + sortBy + " " + sortType + " ) AS RowNum \r\n" +
+      "ROW_NUMBER() OVER (ORDER BY m.:sortBy :sortType) AS RowNum \r\n" +
       "FROM MASTER m " +
       "WHERE 1=1 " + rangeDate
     );
@@ -210,9 +210,14 @@ public class MasterRepositoryCustomImpl implements MasterRepositoryCustom {
     if (nprNameL1 != null && !nprNameL1.isEmpty()) query.setParameter("nprNameL1", nprNameL1);
     if (pcpSwBic != null && !pcpSwBic.isEmpty()) query.setParameter("pcpSwBic", pcpSwBic);
     if (npcSwBic != null && !npcSwBic.isEmpty()) query.setParameter("npcSwBic", npcSwBic);
+    if (startCtrcDate != null && !startCtrcDate.isEmpty()) query.setParameter("startCtrcDate", startCtrcDate);
+    if (endCtrcDate != null && !endCtrcDate.isEmpty()) query.setParameter("endCtrcDate", endCtrcDate);
+    if (currentDate.format(formatter) != null && !currentDate.format(formatter).isEmpty()) query.setParameter("nowTime", currentDate.format(formatter));
 
     query.setParameter("page", page);
     query.setParameter("size", size);
+    query.setParameter("sortBy", sortBy);
+    query.setParameter("size", sortType);
 
     List<MasterResponseDTO> result = query.getResultList();
         
