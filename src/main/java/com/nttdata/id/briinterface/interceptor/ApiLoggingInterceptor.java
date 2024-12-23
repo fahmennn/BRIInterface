@@ -100,7 +100,6 @@ public class ApiLoggingInterceptor implements HandlerInterceptor {
                 
                 return claims.getSubject(); // This should return "admin"
             } catch (JwtException e) {
-            	e.printStackTrace();
                 // Handle token parsing exceptions
                 return "Invalid Token";
             }

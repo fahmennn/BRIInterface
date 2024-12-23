@@ -29,7 +29,7 @@ public class BranchInquiryRepositoryCustomImpl implements BranchInquiryRepositor
           "   b.FAX, b.TELEX, b.TELEXAB, b.BANKGROUP, b.BUSINESS, b.AUTONOMOUS, \r\n" +
           "   b.RATEFORMAT, b.TOLERANCE, b.PARAMSET, b.SERVICES, b.OPTPARSET, \r\n" +
           "   b.INHERITCDP, b.RF_STATUS, b.BHOPENING, b.BHCLOSING, b.SWIFTGPI,\r\n" +
-          "   ROW_NUMBER() OVER (ORDER BY b." + sortBy + " " + sortType + ") AS RowNum " +
+          "   ROW_NUMBER() OVER (ORDER BY b.:sortBy :sortType) AS RowNum " +
           " FROM CAPF b " + 
           " WHERE 1=1 "
     );
@@ -53,7 +53,8 @@ public class BranchInquiryRepositoryCustomImpl implements BranchInquiryRepositor
     if (fullName != null && !fullName.isEmpty()) query.setParameter("fullName", fullName);
     query.setParameter("page", page);
     query.setParameter("size", size);
-
+    query.setParameter("sortBy", sortBy);
+    query.setParameter("sortType", sortType);
     return query.getResultList();
   }
 }

@@ -52,7 +52,6 @@ public class ReleaseItemDocumentController {
             return new ResponseEntity<>(baos.toByteArray(), headers, HttpStatus.OK);
 
         } catch (IOException e) {
-            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

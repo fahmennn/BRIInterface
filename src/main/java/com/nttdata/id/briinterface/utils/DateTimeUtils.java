@@ -37,7 +37,6 @@ public class DateTimeUtils {
         try {
             newDate = formatter.parse(formattedDate);
         } catch (Exception e) {
-            e.printStackTrace();
         }
         System.out.println("New Date: " + newDate);
         return newDate;
