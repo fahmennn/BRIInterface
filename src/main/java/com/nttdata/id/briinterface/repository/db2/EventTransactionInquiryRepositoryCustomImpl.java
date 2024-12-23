@@ -26,12 +26,12 @@ public class EventTransactionInquiryRepositoryCustomImpl implements EventTransac
 
 			// Condition for startDate is Empty
 			if ((startDate == null || startDate.isEmpty()) && (finished != null && !finished.isEmpty())) {
-				rangeFilterDate = " AND b.FINISHED <= '" + finished + "'";
+				rangeFilterDate = " AND b.FINISHED <= ':finished'";
 			}
 
 			// Condition for finished is Empty
 			if ((finished == null || finished.isEmpty()) && (startDate != null && !startDate.isEmpty())) {
-				rangeFilterDate = " AND b.START_DATE <= '" + startDate + "'";
+				rangeFilterDate = " AND b.START_DATE <= ':startDate'";
 			}
 
 			// Condition for startDate and finished is Empty
@@ -43,13 +43,13 @@ public class EventTransactionInquiryRepositoryCustomImpl implements EventTransac
 			if ((startDate != null && !startDate.isEmpty()) && (finished != null && !finished.isEmpty())) {
 				// Check if startDate and finished is same
 				if (startDate.equals(finished)) {
-					rangeFilterDate = " AND b.START_DATE = '" + startDate + "' AND b.FINISHED = '" + finished + "'";
+					rangeFilterDate = " AND b.START_DATE = ':startDate' AND b.FINISHED = ':finished'";
 				}
 				// Check if startDate more than finished
 				if (startDate.compareTo(finished) > 0) {
 					throw new IllegalArgumentException("Start Date must be less than or equal to Finished Date");
 				} else {
-					rangeFilterDate = " AND b.START_DATE >= '" + startDate + "' AND b.FINISHED <= '" + finished + "'";
+					rangeFilterDate = " AND b.START_DATE >= ':startDate' AND b.FINISHED <= ':finished'";
 				}
 			}
 			
@@ -63,7 +63,7 @@ public class EventTransactionInquiryRepositoryCustomImpl implements EventTransac
 	          "   b.ORIGTEAM AS ORIGTEAM, b.ORIGISUSER AS ORIGISUSER, b.ORIGBRANCH AS ORIGBRANCH, b.ORIGUSER AS ORIGUSER, b.ORIGREF AS ORIGREF, b.NPSBBCODE AS NPSBBCODE, b.NPRIMNM AS NPRIMNM, b.VIOLATION AS VIOLATION, b.ORCH_DEFN AS ORCH_DEFN, b.ORCH_STEP AS ORCH_STEP, b.NPRIADLINE AS NPRIADLINE, \r\n" +
 	          "   b.STEPPHASE AS STEPPHASE, b.EXTRAINFO AS EXTRAINFO, b.FURTHERID AS FURTHERID, b.TYPEFLAG AS TYPEFLAG, b.TSTAMP AS TSTAMP, b.EVTREFUSED AS EVTREFUSED, b.ISPROVISEV AS ISPROVISEV, b.AUTONEXTEV AS AUTONEXTEV, b.PROVCONTBY AS PROVCONTBY, b.DOCSPREP AS DOCSPREP, b.DOCSPREPRQ AS DOCSPREPRQ, \r\n" +
 	          "   b.PCP_SW_BIC AS PCP_SW_BIC, b.NPC_SW_BIC AS NPC_SW_BIC, b.EVTREFSTOR AS EVTREFSTOR, b.SWIFTVERSN AS SWIFTVERSN, b.CORPACCESS AS CORPACCESS, \r\n" +
-	          "   ROW_NUMBER() OVER (ORDER BY b." + sortBy + " " + sortType + ") AS RowNum " +
+	          "   ROW_NUMBER() OVER (ORDER BY b.:sortBy :sortType) AS RowNum " +
 	          " FROM BASEEVENT b " + 
 	          " INNER JOIN MASTER m ON b.MASTER_KEY = m.KEY97  " + 
 	          " WHERE 1=1 " + rangeFilterDate
@@ -103,6 +103,8 @@ public class EventTransactionInquiryRepositoryCustomImpl implements EventTransac
 	    if (crossRef != null && !crossRef.isEmpty()) {
 		  sql.append(" AND b.CROSS_REF = :crossRef ");
 		}
+	    
+	    
 
 	    sql.append(") SELECT * FROM RowOrdered WHERE RowNum BETWEEN (:page - 1) * :size + 1 AND :page * :size");
 
@@ -118,8 +120,12 @@ public class EventTransactionInquiryRepositoryCustomImpl implements EventTransac
 	    if (ccy != null && !ccy.isEmpty()) query.setParameter("ccy", ccy);
 	    if (statusEV != null && !statusEV.isEmpty()) query.setParameter("statusEV", statusEV);
 	    if (crossRef != null && !crossRef.isEmpty()) query.setParameter("crossRef", crossRef);
+	    if (crossRef != null && !crossRef.isEmpty()) query.setParameter("startDate", startDate);
+	    if (crossRef != null && !crossRef.isEmpty()) query.setParameter("finished", finished);
 	    query.setParameter("page", page);
 	    query.setParameter("size", size);
+	    query.setParameter("sortBy", sortBy);
+	    query.setParameter("sortType", sortType);
 
 	    return query.getResultList();
 	}
